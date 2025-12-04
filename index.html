@@ -1,256 +1,126 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    <title>ULTAH</title>
-   <style>* {
-   margin: 0;
-   padding: 0;
-   }
-   
-   body {
-   background-color: black;
-   }
-   
-   h1 {
-   margin-top: 5%;
-   font-family: 'Segoe UI';
-   font-size: 60px;
-   text-align: center;
-   color: white;
-   }
-   </style>
-  </head>
-  <body>
-	<h1>Selamat Ulang Tahun Nisaaa :) </h1> <br>
-     
-<div class="text-center">
-    <img src="ANS.png" alt="" width="250" height="250"> <br><br>
-    <div class="tmb text-center">
-        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">Pencet Dulu :)</button>
-    </div>
-</div>
-      <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
-        <div class="offcanvas-header">
-          <h5 id="offcanvasTopLabel">Happy Birthday......!!!!</h5>
-          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          Selamat Ulang Tahun yang ke 20 nis, udah tua nih hahaha, Goodluck Terus ya, Jangan Mageran lagi, Jaga Kesehatan biar ga gampang sakit,Kalau ada apa-apa cerita and Wish You All the best semoga impianmu tercapai.
-        </div>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Surprise! — Happy Birthday</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#ff6b6b;--text:#e6eef8}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#071026 0%,#081123 50%,#08101a 100%);color:var(--text)}
+    .wrap{height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
+    .card{width:360px;max-width:96vw;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:16px;padding:20px;box-shadow:0 10px 30px rgba(2,6,23,0.6);text-align:center}
+    .photo{width:180px;height:180px;border-radius:50%;background:linear-gradient(135deg,#0b1220,#122032);display:inline-flex;align-items:center;justify-content:center;overflow:hidden;margin:0 auto 14px;border:6px solid rgba(255,255,255,0.03)}
+    .photo img{width:100%;height:100%;object-fit:cover;display:block}
+    h1{font-size:20px;margin:6px 0 2px}
+    p{margin:0 0 12px;font-size:13px;opacity:0.95}
+    .controls{display:flex;gap:8px;justify-content:center;margin-top:10px}
+    button, .file-label{appearance:none;border:0;padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer}
+    .file-label{background:rgba(255,255,255,0.04);color:var(--text);display:inline-block}
+    button.primary{background:linear-gradient(90deg,var(--accent),#ffa27a);color:#081026}
+    input#name{width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);margin-top:10px}
+    #canvasConfetti{position:fixed;left:0;top:0;pointer-events:none;width:100%;height:100%;z-index:50}
+    .hidden{display:none}
+    .small{font-size:12px;opacity:0.8}
+    footer{margin-top:12px;font-size:11px;color:rgba(230,238,248,0.6)}
+  </style>
+</head>
+<body>
+  <canvas id="canvasConfetti"></canvas>
+  <div class="wrap">
+    <div class="card" role="main">
+      <div class="photo" id="photoPreview" aria-hidden="false">
+        <!-- Default SVG avatar -->
+        <img 
+                src="nis.jpeg" 
+                alt="Foto Profil" 
+                style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
+            >
+        </svg>
       </div>
-   <script>var rnd = Math.random, flr = Math.floor;
-   let canvas = document.createElement('canvas');
-   
-   document.getElementsByTagName('body')[0].appendChild(canvas);
-   canvas.style.position = 'absolute';
-   canvas.style.width = '100%';
-   canvas.style.height = '100%';
-   
-   canvas.width = canvas.clientWidth;
-   canvas.height = canvas.clientHeight;
-   
-   let ctx = canvas.getContext('2d');
-   
-   function rndNum(num) {
-   return rnd() * num + 1;
-   }
-   
-   function vector(x, y) {
-   this.x = x;
-   this.y = y;
-   
-   this.add = function(vec2) {
-   this.x = this.x + vec2.x;
-   this.y = this.y + vec2.y;
-   }
-   }
-   
-   function particle(pos, vel) {
-   this.pos = new vector(pos.x, pos.y);
-   this.vel = vel;
-   this.finish = false;
-   this.start = 0;
-   
-   this.update = function(time) {
-   let timeSpan = time - this.start;
-   
-   if (timeSpan > 500) {
-   this.finish = true;
-   }
-   
-   if (!this.finish) {
-   this.pos.add(this.vel);
-   this.vel.y = this.vel.y + gravity;
-   }
-   };
-   
-   this.draw = function() {
-   if (!this.finish) {
-   drawDot(this.pos.x, this.pos.y, 1);
-   }
-   }
-   
-   }
-   
-   function firework(x, y) {
-   this.pos = new vector(x, y);
-   this.vel = new vector(0, -rndNum(10) - 3);
-   this.color = 'hsl(' + rndNum(360) + ', 100%, 50%)'
-   this.size = 4;
-   this.finish = false;
-   this.start = 0;
-   let exParticles = [], exPLen = 100;
-   
-   let rootShow = true;
-   
-   this.update = function(time) {
-   if (this.finish) {
-   return;
-   }
-   
-   rootShow = this.vel.y < 0;
-   
-   if (rootShow) {
-   this.pos.add(this.vel);
-   this.vel.y = this.vel.y + gravity;
-   } else {
-   if (exParticles.length === 0) {
-   flash = true;
-   for (let i = 0; i < exPLen; i++) {
-   exParticles.push(new particle(this.pos, new vector(-rndNum(10) + 5, -rndNum(10) + 5)));
-   exParticles[exParticles.length - 1].start = time;
-   }
-   }
-   let countFinish = 0;
-   for (let i = 0; i < exPLen; i++) {
-   let p = exParticles[i];
-   p.update(time);
-   if (p.finish) {
-   countFinish++;
-   }
-   }
-   
-   if (countFinish === exPLen) {
-   this.finish = true;
-   }
-   
-   }
-   }
-   
-   this.draw = function() {
-   if (this.finish) {
-   return;
-   }
-   
-   ctx.fillStyle = this.color;
-   if (rootShow) {
-   drawDot(this.pos.x, this.pos.y, this.size);
-   } else {
-   for (let i = 0; i < exPLen; i++) {
-   let p = exParticles[i];
-   p.draw();
-   }
-   }
-   }
-   
-   }
-   
-   function drawDot(x, y, size) {
-   ctx.beginPath();
-   
-   ctx.arc(x, y, size, 0, Math.PI * 2);
-   ctx.fill();
-   
-   ctx.closePath();
-   }
-   
-   var fireworks = [],
-   gravity = 0.2,
-   snapTime = 0,
-   flash = false;
-   
-   function init() {
-   let numOfFireworks = 20;
-   for (let i = 0; i < numOfFireworks; i++) {
-   fireworks.push(new firework(rndNum(canvas.width), canvas.height));
-   }
-   }
-   
-   function update(time) {
-   for (let i = 0, len = fireworks.length; i < len; i++) {
-   let p = fireworks[i];
-   p.update(time);
-   }
-   }
-   
-   function draw(time) {
-   update(time);
-   
-   ctx.fillStyle = 'rgba(0,0,0,0.3)';
-   if (flash) {
-   flash = false;
-   }
-   ctx.fillRect(0, 0, canvas.width, canvas.height);
-   
-   ctx.fillStyle = 'white';
-   ctx.font = "30px Segoe UI";
-   let newTime = time - snapTime;
-   snapTime = time;
-   
-   ctx.fillStyle = 'blue';
-   for (let i = 0, len = fireworks.length; i < len; i++) {
-   let p = fireworks[i];
-   if (p.finish) {
-   fireworks[i] = new firework(rndNum(canvas.width), canvas.height);
-   p = fireworks[i];
-   p.start = time;
-   }
-   p.draw();
-   }
-   
-   window.requestAnimationFrame(draw);
-   }
-   
-   window.addEventListener('resize', function() {
-   canvas.width = canvas.clientWidth;
-   canvas.height = canvas.clientHeight;
-   });
-   
-   init();
-   draw();
-   </script>
+
+      <h1 id="greeting">Happy Birthday, <span id="nameText">Nisa</span> 🎉</h1>
+<h1>Wih You All the Best, Hopefully what you aspire to will be achieved</h1>
+      <p class="small">Klik "Surprise!" untuk animasi, lagu, dan kejutan.</p>
+
+      <input id="name" placeholder="" aria-label="Nama untuk ucapan" />
+
+      <div class="controls">
+        <input id="photoInput" class="hidden" type="file" accept="image/*" />
+        <button id="surpriseBtn" class="primary">Surprise!</button>
+      </div>
+
+      <footer>Tip: pilih foto lalu ketik nama, lalu tekan Surprise.</footer>
+    </div>
+  </div>
+
+  <script>
+    // Elements
+    const photoInput = document.getElementById('photoInput');
+    const photoPreview = document.getElementById('photoPreview');
+    const surpriseBtn = document.getElementById('surpriseBtn');
+    const nameInput = document.getElementById('name');
+    const nameText = document.getElementById('nameText');
+
+    // Load image preview
+    photoInput.addEventListener('change', (e)=>{
+      const f = e.target.files && e.target.files[0];
+      if(!f) return;
+      const url = URL.createObjectURL(f);
+      photoPreview.innerHTML = '';
+      const img = document.createElement('img');
+      img.alt = 'Foto ulang tahun';
+      img.src = url;
+      photoPreview.appendChild(img);
+    });
+
+    // Confetti canvas simple engine
+    const canvas = document.getElementById('canvasConfetti');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+    function resize(){W = canvas.width = innerWidth; H = canvas.height = innerHeight}
+    addEventListener('resize', resize); resize();
+
+    function makeParticles(count){particles = []; for(let i=0;i<count;i++){particles.push({x:Math.random()*W,y:Math.random()*-H,w:8+Math.random()*12,h:8+Math.random()*12,angle:Math.random()*360,speed:2+Math.random()*4,rotation:Math.random()*360,color:`hsl(${Math.floor(Math.random()*360)},80%,60%)`})}}
+
+    function draw(){ctx.clearRect(0,0,W,H); for(let p of particles){p.y += p.speed; p.x += Math.sin((p.y+p.x)/40); p.rotation += 6; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rotation*Math.PI/180); ctx.fillStyle = p.color; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); ctx.restore()} particles = particles.filter(p=>p.y < H+50);}
+
+    let confettiAnim;
+    function startConfetti(){makeParticles(120); let ticks=0; cancelAnimationFrame(confettiAnim); function frame(){draw(); confettiAnim = requestAnimationFrame(frame); if(ticks++ > 300) cancelAnimationFrame(confettiAnim);} frame();}
+
+    // Happy Birthday melody (simplified) using WebAudio
+    function playMelody(){try{const ctx = new (window.AudioContext||window.webkitAudioContext)(); const master = ctx.createGain(); master.gain.value = 0.12; master.connect(ctx.destination);
+      const sequence = [
+        ['G4',300],['G4',300],['A4',600],['G4',600],['C5',600],['B4',1200],
+        ['G4',300],['G4',300],['A4',600],['G4',600],['D5',600],['C5',1200],
+        ['G4',300],['G4',300],['G5',600],['E5',600],['C5',600],['B4',600],['A4',1200],
+        ['F5',300],['F5',300],['E5',600],['C5',600],['D5',600],['C5',1200]
+      ];
+      const noteFreq = n=>{
+        const notes = { 'C4':261.63,'D4':293.66,'E4':329.63,'F4':349.23,'G4':392.00,'A4':440.00,'B4':493.88,'C5':523.25,'D5':587.33,'E5':659.25,'F5':698.46,'G5':783.99 };
+        return notes[n] || 440;
+      };
+      let t = ctx.currentTime + 0.1;
+      for(const [note,dur] of sequence){ const o = ctx.createOscillator(); const g = ctx.createGain(); o.type='sine'; o.frequency.value = noteFreq(note); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(1, t+0.01); g.gain.linearRampToValueAtTime(0.0001, t + (dur/1000)-0.02); o.connect(g); g.connect(master); o.start(t); o.stop(t + (dur/1000)); t += dur/1000; }
+    }catch(e){console.warn('Audio not supported',e)} }
+
+    // Small pop animation for card
+    function pulseCard(){const card = document.querySelector('.card'); card.animate([{transform:'scale(1)'},{transform:'scale(1.02)'},{transform:'scale(1)'}],{duration:700,iterations:1,easing:'cubic-bezier(.2,.9,.3,1)'});} 
+
+    // Surprise action
+    surpriseBtn.addEventListener('click', ()=>{
+      const name = nameInput.value.trim(); nameText.textContent = name || 'Nisa';
+      startConfetti(); playMelody(); pulseCard();
+      // small text sparkle
+      surpriseBtn.textContent = '🎉 Enjoy!';
+      surpriseBtn.disabled = true;
+      setTimeout(()=>{surpriseBtn.textContent = 'Surprise!'; surpriseBtn.disabled = false},7000);
+    });
+
+    // Allow file label to trigger input
+    document.querySelector('.file-label').addEventListener('click', ()=>photoInput.click());
+
+    // Friendly keyboard: Enter in name triggers surprise
+    nameInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter'){ surpriseBtn.click(); }});
+  </script>
 </body>
-</html>
-
-<html>
-	<head>
-		<body>
-			<body bgcolor="black"><center><br>
-			<font face="Abel" size="6px" color="grey"><b></b>
-			<br><font size="3px">
-			<font color="white">[ </font><marquee scrollamount="5" width="700" height="20" behavior="alternate">HAPPY BIRTHDAY NISAA, SEMOGA GA MAGERAN LAGI, JADI MAKIN SEHAT, GA BEGADANG LAGI & WISH YOU ALL THE BEST </marquee><font color="white"> ]</font>
-			<br><br><font size="3px" face="Ubuntu Condensed">
-            
-		</body>
-	</font>
-    
-
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    -->
-  </body>
 </html>
